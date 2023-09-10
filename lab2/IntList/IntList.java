@@ -14,6 +14,7 @@ public class IntList {
         if (rest == null) {
             return 1;
         }
+
         return 1 + this.rest.size();
     }
 
