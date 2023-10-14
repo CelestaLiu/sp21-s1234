@@ -34,6 +34,7 @@ public class AListNoResizing<Item> {
     public Item getLast() {
         return items[size - 1];
     }
+
     /** Gets the ith item in the list (0 is the front). */
     public Item get(int i) {
         return items[i];
