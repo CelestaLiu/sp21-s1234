@@ -48,7 +48,6 @@ public class TestBuggyAList {
             } else if(operationNumber == 1){
                 assertEquals(a1.size(), a2.size());
                 if(a1.size() != 0) assertEquals(a1.getLast(), a2.getLast());
-                int size = a1.size();
             } else if(operationNumber == 2){
                 int size = a1.size();
                 if(size == 0) continue;
