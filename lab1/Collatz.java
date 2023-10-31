@@ -13,6 +13,7 @@ public class Collatz {
             return n * 2;
         }
     }
+    //interesting
 
     public static void main(String[] args) {
         int n = 5;
