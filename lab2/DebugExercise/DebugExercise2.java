@@ -14,6 +14,7 @@ public class DebugExercise2 {
 
         int max = b & w | a & z;
         return max;
+        //test for git
     }
 
 
