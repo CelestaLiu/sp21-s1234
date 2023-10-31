@@ -11,4 +11,8 @@ public class HorribleSteve {
         }
         System.out.println("i is " + i);
     }
+
+    public void print(){
+        System.out.println("hello");
+    }
 }
