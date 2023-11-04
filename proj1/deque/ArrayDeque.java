@@ -3,11 +3,11 @@ package deque;
 import java.util.Iterator;
 
 public class ArrayDeque<T> implements Deque<T>{
-    private int size;
-    private int capacity;
-    private int nextFirst;
-    private int nextLast;
-    private T[] items = (T[]) new Object[8];
+    public int size;
+    public int capacity;
+    public int nextFirst;
+    public int nextLast;
+    public T[] items = (T[]) new Object[8];
 
     private class DequeIterator implements Iterator<T> {
         public int pos;
@@ -62,6 +62,7 @@ public class ArrayDeque<T> implements Deque<T>{
         capacity = 8;
     }
 
+    @Override
     public void addFirst(T item){
         size++;
         items[nextFirst] = item;
@@ -69,6 +70,7 @@ public class ArrayDeque<T> implements Deque<T>{
         if(size == capacity) resize(size * 2);
     }
 
+    @Override
     public void addLast(T item){
         size++;
         items[nextLast] = item;
@@ -76,15 +78,12 @@ public class ArrayDeque<T> implements Deque<T>{
         if(size == capacity) resize(size * 2);
     }
 
-    public boolean isEmpty(){
-        if(size == 0) return true;
-        return false;
-    }
-
+    @Override
     public int size(){
         return size;
     }
 
+    @Override
     public void printDeque(){
         for (int i = 0; i < size; i++) {
             System.out.print(get(i) + " ");
@@ -92,6 +91,7 @@ public class ArrayDeque<T> implements Deque<T>{
         System.out.println();
     }
 
+    @Override
     public T removeFirst(){
         if(isEmpty() == true) return null;
         size--;
@@ -102,6 +102,7 @@ public class ArrayDeque<T> implements Deque<T>{
         return firstItem;
     }
 
+    @Override
     public T removeLast(){
         if(isEmpty() == true) return null;
         size--;
@@ -112,13 +113,14 @@ public class ArrayDeque<T> implements Deque<T>{
         return lastItem;
     }
 
+    @Override
     public T get(int index){
         if((index < 0) || (index >= size)) return null;
         int pos = (nextFirst + 1 + index) % capacity;
         return items[pos];
     }
 
-
+    @Override
     public boolean equals(Object o){
         if(o instanceof ArrayDeque){
             if(((ArrayDeque<?>) o).size != size) return false;

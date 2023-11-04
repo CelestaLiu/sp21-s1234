@@ -2,7 +2,7 @@ package deque;
 
 import java.util.Iterator;
 
-public class LinkedListDeque<T>{
+public class LinkedListDeque<T> implements Deque<T>{
     private TNode sentinel;
     private int size;
 
@@ -55,6 +55,7 @@ public class LinkedListDeque<T>{
         return getRecursiveH(index, t);
     }
 
+    @Override
     public void addFirst(T item){
         TNode<T> newNode = new TNode<>(item, sentinel, sentinel.next);
         sentinel.next.prev = newNode;
@@ -62,6 +63,7 @@ public class LinkedListDeque<T>{
         size++;
     }
 
+    @Override
     public void addLast(T item){
         TNode<T> newNode = new TNode<>(item, sentinel.prev, sentinel);
         sentinel.prev.next = newNode;
@@ -69,15 +71,12 @@ public class LinkedListDeque<T>{
         size++;
     }
 
-    public boolean isEmpty(){
-        if(size == 0) return true;
-        return false;
-    }
-
+    @Override
     public int size(){
         return size;
     }
 
+    @Override
     public void printDeque(){
         TNode<T> t = sentinel.next;
 
@@ -88,7 +87,7 @@ public class LinkedListDeque<T>{
         System.out.println();
     }
 
-
+    @Override
     public T removeFirst(){
         if(isEmpty() == true) return null;
         //if(sentinel.next == sentinel) return null;
@@ -100,7 +99,7 @@ public class LinkedListDeque<T>{
         return firstNode.item;
     }
 
-
+    @Override
     public T removeLast(){
         if(isEmpty() == true) return null;
         //if(sentinel.next == sentinel) return null;
@@ -112,7 +111,7 @@ public class LinkedListDeque<T>{
         return lastNode.item;
     }
 
-
+    @Override
     public T get(int index){
         if(index < 0) return null;
 
@@ -126,6 +125,7 @@ public class LinkedListDeque<T>{
         return t.item;
     }
 
+    @Override
     public boolean equals(Object o){
         if(o instanceof LinkedListDeque){
             TNode<T> t1 = sentinel.next;
