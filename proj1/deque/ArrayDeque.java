@@ -147,7 +147,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         return items[pos];
     }
 
-    @Override
+    /*
     public boolean equals(Object o) {
         if (o instanceof ArrayDeque) {
             if (((ArrayDeque<?>) o).size != size) {
@@ -171,6 +171,38 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return true;
         }
         return false;
+    }
+
+     */
+
+    public boolean equals(Object o){
+        if (o == null) {
+            return false;
+        }
+
+        if (o == this) {
+            return true;
+        }
+
+        if (! (o instanceof Deque)) {
+            return false;
+        }
+
+        if (isEmpty() != ((Deque<?>) o).isEmpty()) {
+            return false;
+        }
+
+        if (size() != ((Deque<?>) o).size()) {
+            return false;
+        }
+
+        for (int i = 0; i < size(); i++) {
+            if (get(i) != ((Deque<?>) o).get(i)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
 }

@@ -165,6 +165,24 @@ public class ArrayDequeTest {
         assertEquals(false, a1.equals(a2));
     }
 
+    @Test
+    public void EqualTestWithVaryDeques(){
+        ArrayDeque<Integer> a = new ArrayDeque<>();
+        ArrayDeque<Integer> a1 = new ArrayDeque<>();
+        LinkedListDeque<Integer> l = new LinkedListDeque<>();
 
+        a.addFirst(1);
+        a.addFirst(2);
+        a.addFirst(3);
+
+        a1.addFirst(1);
+
+        l.addFirst(1);
+        l.addFirst(2);
+        l.addFirst(3);
+
+
+        assertEquals(false, a.equals(a1));
+    }
 
 }
