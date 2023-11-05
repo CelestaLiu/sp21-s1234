@@ -2,7 +2,7 @@ package deque;
 
 import java.util.Iterator;
 
-public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
+public class ArrayDeque<T> implements Deque<T> , Iterable<T> {
     private int size;
     private int capacity;
     private int nextFirst;
@@ -10,17 +10,17 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
     private T[] items = (T[]) new Object[8];
 
     private class DequeIterator implements Iterator<T> {
-        public int pos;
+        private int pos;
 
-        DequeIterator(){
+        DequeIterator() {
             pos = 0;
         }
 
-        public boolean hasNext(){
+        public boolean hasNext() {
             return pos < size;
         }
 
-        public T next(){
+        public T next() {
             T returnItem = get(pos);
             pos += 1;
             return returnItem;
@@ -28,35 +28,35 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
 
     }
 
-    public Iterator<T> iterator(){
+    public Iterator<T> iterator() {
         return new DequeIterator();
     }
 
-    public void resize(int newCapacity){
+    public void resize(int newCapacity) {
         T[] t = (T[]) new Object[newCapacity];
         int realFirst = (nextFirst + 1) % capacity;
         int realLast = (nextLast - 1 + capacity) % capacity;
 
         int newNextFirst = newCapacity / 2;
 
-        if(realFirst <= realLast){
+        if (realFirst <= realLast) {
             //System.arraycopy(items, realFirst, t, newNextFirst, size);
             for (int i = 0; i < size; i++) {
                 t[newNextFirst++] = items[realFirst++];
-                if(newNextFirst == newCapacity) {
+                if (newNextFirst == newCapacity) {
                     newNextFirst = 0;
                 }
-                if(realFirst == capacity) {
+                if (realFirst == capacity) {
                     realFirst = 0;
                 }
             }
-        } else{
+        } else {
             for (int i = 0; i < size; i++) {
                 t[newNextFirst++] = items[realFirst++];
-                if(newNextFirst == newCapacity) {
+                if (newNextFirst == newCapacity) {
                     newNextFirst = 0;
                 }
-                if(realFirst == capacity) {
+                if (realFirst == capacity) {
                     realFirst = 0;
                 }
             }
@@ -68,7 +68,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
         nextFirst = (newCapacity / 2 + capacity - 1) % capacity;
     }
 
-    public ArrayDeque(){
+    public ArrayDeque() {
         size = 0;
         nextFirst = 3;
         nextLast = 4;
@@ -76,32 +76,32 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
     }
 
     @Override
-    public void addFirst(T item){
+    public void addFirst(T item) {
         size++;
         items[nextFirst] = item;
         nextFirst = (nextFirst + capacity -1) % capacity;
-        if(size == capacity) {
+        if (size == capacity) {
             resize(size * 2);
         }
     }
 
     @Override
-    public void addLast(T item){
+    public void addLast(T item) {
         size++;
         items[nextLast] = item;
         nextLast = (nextLast + 1) % capacity;
-        if(size == capacity) {
+        if (size == capacity) {
             resize(size * 2);
         }
     }
 
     @Override
-    public int size(){
+    public int size() {
         return size;
     }
 
     @Override
-    public void printDeque(){
+    public void printDeque() {
         for (int i = 0; i < size; i++) {
             System.out.print(get(i) + " ");
         }
@@ -109,38 +109,38 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
     }
 
     @Override
-    public T removeFirst(){
-        if(isEmpty() == true) {
+    public T removeFirst() {
+        if (isEmpty() == true) {
             return null;
         }
         size--;
         nextFirst = (nextFirst + 1) % capacity;
         T firstItem = items[nextFirst];
         items[nextFirst] = null;
-        if((size * 2 < capacity) && (size != 8)) {
+        if ((size * 2 < capacity) && (size != 8)) {
             resize(capacity / 2);
         }
         return firstItem;
     }
 
     @Override
-    public T removeLast(){
-        if(isEmpty() == true) {
+    public T removeLast() {
+        if (isEmpty() == true) {
             return null;
         }
         size--;
         nextLast = (nextLast + capacity -1) % capacity;
         T lastItem = items[nextLast];
         items[nextLast] = null;
-        if((size * 2 < capacity) && (size != 8)) {
+        if ((size * 2 < capacity) && (size != 8)) {
             resize(capacity / 2);
         }
         return lastItem;
     }
 
     @Override
-    public T get(int index){
-        if((index < 0) || (index >= size)) {
+    public T get(int index) {
+        if ((index < 0) || (index >= size)) {
             return null;
         }
         int pos = (nextFirst + 1 + index) % capacity;
@@ -148,23 +148,23 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
     }
 
     @Override
-    public boolean equals(Object o){
-        if(o instanceof ArrayDeque){
-            if(((ArrayDeque<?>) o).size != size){
+    public boolean equals(Object o) {
+        if (o instanceof ArrayDeque) {
+            if (((ArrayDeque<?>) o).size != size) {
                 return false;
             }
-            if(((ArrayDeque<?>) o).capacity != capacity) {
+            if (((ArrayDeque<?>) o).capacity != capacity) {
                 return false;
             }
-            if(((ArrayDeque<?>) o).nextFirst != nextFirst) {
+            if (((ArrayDeque<?>) o).nextFirst != nextFirst) {
                 return false;
             }
-            if(((ArrayDeque<?>) o).nextLast != nextLast) {
+            if (((ArrayDeque<?>) o).nextLast != nextLast) {
                 return false;
             }
 
             for (int i = 0; i < size; i++) {
-                if(get(i) != ((ArrayDeque<?>) o).get(i)) return false;
+                if (get(i) != ((ArrayDeque<?>) o).get(i)) return false;
             }
             return true;
         }

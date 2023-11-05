@@ -5,35 +5,35 @@ import java.util.Comparator;
 public class MaxArrayDeque<T> extends ArrayDeque<T>{
     private final Comparator<T> comparator;
 
-    public MaxArrayDeque(Comparator<T> c){
+    public MaxArrayDeque(Comparator<T> c) {
         comparator = c;
     }
 
-    public T max(Comparator<T> c){
-        if(isEmpty() == true) return null;
+    public T max(Comparator<T> c) {
+        if (isEmpty() == true) return null;
 
         int maxIndex = 0;
         for (int i = 0; i < size(); i++) {
-            if(c.compare(get(i), get(maxIndex)) > 0){
+            if (c.compare(get(i), get(maxIndex)) > 0) {
                 maxIndex = i;
             }
         }
         return get(maxIndex);
     }
 
-    public T max(){
+    public T max() {
         return max(comparator);
     }
 
     @Override
-    public boolean equals(Object o){
-        if(o == null) return false;
+    public boolean equals(Object o) {
+        if (o == null) return false;
 
-        if(o == this) return true;
+        if (o == this) return true;
 
-        if(!(o instanceof MaxArrayDeque)) return false;
+        if (!(o instanceof MaxArrayDeque)) return false;
 
-        if(((MaxArrayDeque<?>) o).max() != max()) return false;
+        if (((MaxArrayDeque<?>) o).max() != max()) return false;
 
         return super.equals(o);
     }
