@@ -134,6 +134,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         return t.item;
     }
 
+    /*
     @Override
     public boolean equals(Object o) {
         if (o instanceof LinkedListDeque) {
@@ -145,7 +146,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
             }
 
             while (t1 != sentinel) {
-                if (t1.item.equals(t2.item) != true) {
+                if (!(t1.item.equals(t2.item))) {
                     return false;
                 }
                 t1 = t1.next;
@@ -156,4 +157,6 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         return false;
     }
 
+
+     */
 }
