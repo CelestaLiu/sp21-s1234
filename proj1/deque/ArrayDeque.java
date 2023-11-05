@@ -2,29 +2,34 @@ package deque;
 
 import java.util.Iterator;
 
-public class ArrayDeque<T> implements Deque<T>{
-    public int size;
-    public int capacity;
-    public int nextFirst;
-    public int nextLast;
-    public T[] items = (T[]) new Object[8];
+public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
+    private int size;
+    private int capacity;
+    private int nextFirst;
+    private int nextLast;
+    private T[] items = (T[]) new Object[8];
 
     private class DequeIterator implements Iterator<T> {
         public int pos;
 
+        DequeIterator(){
+            pos = 0;
+        }
+
         public boolean hasNext(){
-            return pos < nextLast;
+            return pos < size;
         }
 
         public T next(){
             T returnItem = get(pos);
-            pos = (pos + 1) % capacity;
+            pos += 1;
             return returnItem;
         }
 
-        public Iterator<T> iterator(){
-            return new DequeIterator();
-        }
+    }
+
+    public Iterator<T> iterator(){
+        return new DequeIterator();
     }
 
     public void resize(int newCapacity){
@@ -38,14 +43,22 @@ public class ArrayDeque<T> implements Deque<T>{
             //System.arraycopy(items, realFirst, t, newNextFirst, size);
             for (int i = 0; i < size; i++) {
                 t[newNextFirst++] = items[realFirst++];
-                if(newNextFirst == newCapacity) newNextFirst = 0;
-                if(realFirst == capacity) realFirst = 0;
+                if(newNextFirst == newCapacity) {
+                    newNextFirst = 0;
+                }
+                if(realFirst == capacity) {
+                    realFirst = 0;
+                }
             }
         } else{
             for (int i = 0; i < size; i++) {
                 t[newNextFirst++] = items[realFirst++];
-                if(newNextFirst == newCapacity) newNextFirst = 0;
-                if(realFirst == capacity) realFirst = 0;
+                if(newNextFirst == newCapacity) {
+                    newNextFirst = 0;
+                }
+                if(realFirst == capacity) {
+                    realFirst = 0;
+                }
             }
         }
 
@@ -67,7 +80,9 @@ public class ArrayDeque<T> implements Deque<T>{
         size++;
         items[nextFirst] = item;
         nextFirst = (nextFirst + capacity -1) % capacity;
-        if(size == capacity) resize(size * 2);
+        if(size == capacity) {
+            resize(size * 2);
+        }
     }
 
     @Override
@@ -75,7 +90,9 @@ public class ArrayDeque<T> implements Deque<T>{
         size++;
         items[nextLast] = item;
         nextLast = (nextLast + 1) % capacity;
-        if(size == capacity) resize(size * 2);
+        if(size == capacity) {
+            resize(size * 2);
+        }
     }
 
     @Override
@@ -93,29 +110,39 @@ public class ArrayDeque<T> implements Deque<T>{
 
     @Override
     public T removeFirst(){
-        if(isEmpty() == true) return null;
+        if(isEmpty() == true) {
+            return null;
+        }
         size--;
         nextFirst = (nextFirst + 1) % capacity;
         T firstItem = items[nextFirst];
         items[nextFirst] = null;
-        if((size * 2 < capacity) && (size != 8)) resize(capacity / 2);
+        if((size * 2 < capacity) && (size != 8)) {
+            resize(capacity / 2);
+        }
         return firstItem;
     }
 
     @Override
     public T removeLast(){
-        if(isEmpty() == true) return null;
+        if(isEmpty() == true) {
+            return null;
+        }
         size--;
         nextLast = (nextLast + capacity -1) % capacity;
         T lastItem = items[nextLast];
         items[nextLast] = null;
-        if((size * 2 < capacity) && (size != 8)) resize(capacity / 2);
+        if((size * 2 < capacity) && (size != 8)) {
+            resize(capacity / 2);
+        }
         return lastItem;
     }
 
     @Override
     public T get(int index){
-        if((index < 0) || (index >= size)) return null;
+        if((index < 0) || (index >= size)) {
+            return null;
+        }
         int pos = (nextFirst + 1 + index) % capacity;
         return items[pos];
     }
@@ -123,10 +150,18 @@ public class ArrayDeque<T> implements Deque<T>{
     @Override
     public boolean equals(Object o){
         if(o instanceof ArrayDeque){
-            if(((ArrayDeque<?>) o).size != size) return false;
-            if(((ArrayDeque<?>) o).capacity != capacity) return false;
-            if(((ArrayDeque<?>) o).nextFirst != nextFirst) return false;
-            if(((ArrayDeque<?>) o).nextLast != nextLast) return false;
+            if(((ArrayDeque<?>) o).size != size){
+                return false;
+            }
+            if(((ArrayDeque<?>) o).capacity != capacity) {
+                return false;
+            }
+            if(((ArrayDeque<?>) o).nextFirst != nextFirst) {
+                return false;
+            }
+            if(((ArrayDeque<?>) o).nextLast != nextLast) {
+                return false;
+            }
 
             for (int i = 0; i < size; i++) {
                 if(get(i) != ((ArrayDeque<?>) o).get(i)) return false;
@@ -135,7 +170,5 @@ public class ArrayDeque<T> implements Deque<T>{
         }
         return false;
     }
-
-
 
 }
