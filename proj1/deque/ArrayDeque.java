@@ -2,7 +2,7 @@ package deque;
 
 import java.util.Iterator;
 
-public class ArrayDeque<T> implements Deque<T> , Iterable<T> {
+public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private int size;
     private int capacity;
     private int nextFirst;
@@ -32,7 +32,7 @@ public class ArrayDeque<T> implements Deque<T> , Iterable<T> {
         return new DequeIterator();
     }
 
-    public void resize(int newCapacity) {
+    private void resize(int newCapacity) {
         T[] t = (T[]) new Object[newCapacity];
         int realFirst = (nextFirst + 1) % capacity;
         int realLast = (nextLast - 1 + capacity) % capacity;
@@ -79,7 +79,7 @@ public class ArrayDeque<T> implements Deque<T> , Iterable<T> {
     public void addFirst(T item) {
         size++;
         items[nextFirst] = item;
-        nextFirst = (nextFirst + capacity -1) % capacity;
+        nextFirst = (nextFirst + capacity - 1) % capacity;
         if (size == capacity) {
             resize(size * 2);
         }
@@ -110,7 +110,7 @@ public class ArrayDeque<T> implements Deque<T> , Iterable<T> {
 
     @Override
     public T removeFirst() {
-        if (isEmpty() == true) {
+        if (isEmpty()) {
             return null;
         }
         size--;
@@ -125,11 +125,11 @@ public class ArrayDeque<T> implements Deque<T> , Iterable<T> {
 
     @Override
     public T removeLast() {
-        if (isEmpty() == true) {
+        if (isEmpty()) {
             return null;
         }
         size--;
-        nextLast = (nextLast + capacity -1) % capacity;
+        nextLast = (nextLast + capacity - 1) % capacity;
         T lastItem = items[nextLast];
         items[nextLast] = null;
         if ((size * 2 < capacity) && (size != 8)) {
@@ -164,7 +164,9 @@ public class ArrayDeque<T> implements Deque<T> , Iterable<T> {
             }
 
             for (int i = 0; i < size; i++) {
-                if (get(i) != ((ArrayDeque<?>) o).get(i)) return false;
+                if (get(i) != ((ArrayDeque<?>) o).get(i)) {
+                    return false;
+                }
             }
             return true;
         }

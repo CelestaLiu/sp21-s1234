@@ -2,7 +2,7 @@ package deque;
 
 import java.util.Comparator;
 
-public class MaxArrayDeque<T> extends ArrayDeque<T>{
+public class MaxArrayDeque<T> extends ArrayDeque<T> {
     private final Comparator<T> comparator;
 
     public MaxArrayDeque(Comparator<T> c) {
@@ -10,7 +10,9 @@ public class MaxArrayDeque<T> extends ArrayDeque<T>{
     }
 
     public T max(Comparator<T> c) {
-        if (isEmpty() == true) return null;
+        if (isEmpty()) {
+            return null;
+        }
 
         int maxIndex = 0;
         for (int i = 0; i < size(); i++) {
@@ -25,15 +27,22 @@ public class MaxArrayDeque<T> extends ArrayDeque<T>{
         return max(comparator);
     }
 
-    @Override
     public boolean equals(Object o) {
-        if (o == null) return false;
+        if (o == null) {
+            return false;
+        }
 
-        if (o == this) return true;
+        if (o == this) {
+            return true;
+        }
 
-        if (!(o instanceof MaxArrayDeque)) return false;
+        if (!(o instanceof MaxArrayDeque)) {
+            return false;
+        }
 
-        if (((MaxArrayDeque<?>) o).max() != max()) return false;
+        if (((MaxArrayDeque<?>) o).max() != max()) {
+            return false;
+        }
 
         return super.equals(o);
     }
