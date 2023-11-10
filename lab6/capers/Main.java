@@ -51,6 +51,13 @@ public class Main {
             text = args[1];
             capers.CapersRepository.writeStory(text);
             break;
+
+
+
+
+
+
+
         case "dog":
             validateNumArgs("dog", args, 4);
             String name = args[1];
