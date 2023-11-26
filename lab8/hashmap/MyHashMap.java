@@ -217,7 +217,14 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
      * UnsupportedOperationException.
      */
     public V remove(K key) {
-        throw new UnsupportedOperationException();
+        int bucketIndex = getIndex(key);
+        Node node = getNode(key, bucketIndex);
+        if (node == null) {
+            return null;
+        }
+        size--;
+        buckets[bucketIndex].remove(node);
+        return node.value;
     }
 
     /**
@@ -226,7 +233,14 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
      * throw an UnsupportedOperationException.
      */
     public V remove(K key, V value) {
-        throw new UnsupportedOperationException();
+        int bucketIndex = getIndex(key);
+        Node node = getNode(key);
+
+        if (node == null || !node.value.equals(value)) {
+            return null;
+        }
+        buckets[bucketIndex].remove(node);
+        return node.value;
     }
 
     public Iterator<K> iterator() {
