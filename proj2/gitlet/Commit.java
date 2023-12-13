@@ -2,7 +2,18 @@ package gitlet;
 
 // TODO: any imports you need here
 
-import java.util.Date; // TODO: You'll likely use this in this class
+import org.w3c.dom.UserDataHandler;
+
+import java.io.File;
+import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+
+import static gitlet.MyUtils.getObjectFile;
+import static gitlet.MyUtils.saveObjectFile;
+import static gitlet.Utils.sha1;
 
 /** Represents a gitlet commit object.
  *  TODO: It's a good idea to give a description here of what else this Class
@@ -10,7 +21,7 @@ import java.util.Date; // TODO: You'll likely use this in this class
  *
  *  @author TODO
  */
-public class Commit {
+public class Commit implements Serializable {
     /**
      * TODO: add instance variables here.
      *
@@ -21,6 +32,34 @@ public class Commit {
 
     /** The message of this Commit. */
     private String message;
+    private final Date date;
+    private final List<String> parents;
+    private final Map<String, String> tracked;
+    private final String id;
+    private final File file;
+
+
+    public Commit() {
+        date = new Date(0);
+        message = "initial commit";
+        parents = new ArrayList<>();
+        tracked = new HashMap<>();
+        id = generateId();
+        file = getObjectFile(id);
+    }
+
+    private String generateId() {
+        return sha1(getTimeStamp(), message, parents.toString(), tracked.toString());
+    }
+
+    private String getTimeStamp() {
+        DateFormat dateFormat = new SimpleDateFormat("EEE MMM d HH:mm:ss yyyy Z", Locale.ENGLISH);
+        return dateFormat.format(date);
+    }
+
+    public void save() {
+        saveObjectFile(file, this);
+    }
 
     /* TODO: fill in the rest of this class. */
 }

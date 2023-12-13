@@ -39,7 +39,7 @@ public class Main {
      */
     public static void main(String[] args) {
         if (args.length == 0) {
-            capers.Utils.exitWithError("Must have at least one argument");
+            capers.Utils.exitWithError("Please enter a command.");
         }
 
         capers.CapersRepository.setupPersistence();
