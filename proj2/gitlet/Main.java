@@ -4,7 +4,7 @@ import static gitlet.MyUtils.exit;
 import static gitlet.Repository.init;
 
 /** Driver class for Gitlet, a subset of the Git version-control system.
- *  @author TODO
+ *  @author yaoyao
  */
 public class Main {
 
@@ -20,12 +20,15 @@ public class Main {
         String firstArg = args[0];
         switch(firstArg) {
             case "init":
-                // TODO: handle the `init` command
                 checkNumOfArgs(args, 1);
                 Repository.init();
                 break;
             case "add":
                 // TODO: handle the `add [filename]` command
+                Repository.checkWorkingDir();
+                checkNumOfArgs(args, 2);
+                String fileName = args[1];
+                new Repository().add(fileName);
                 break;
             // TODO: FILL THE REST IN
         }

@@ -2,10 +2,16 @@ package gitlet;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.function.Supplier;
 
 import static gitlet.Utils.*;
 
 public class MyUtils {
+
+    public static <T> Lazy<T> lazy(Supplier<T> delegate) {
+        return new Lazy<>(delegate);
+    }
+
     public static void exit(String message, Object... args) {
         message(message, args);
         System.exit(0);

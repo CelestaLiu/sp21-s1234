@@ -13,6 +13,7 @@ import java.util.*;
 
 import static gitlet.MyUtils.getObjectFile;
 import static gitlet.MyUtils.saveObjectFile;
+import static gitlet.Utils.readObject;
 import static gitlet.Utils.sha1;
 
 /** Represents a gitlet commit object.
@@ -59,6 +60,14 @@ public class Commit implements Serializable {
 
     public void save() {
         saveObjectFile(file, this);
+    }
+
+    public static Commit fromFile(String id) {
+        return readObject(getObjectFile(id), Commit.class);
+    }
+
+    public Map<String, String> getTracked() {
+        return tracked;
     }
 
     /* TODO: fill in the rest of this class. */
