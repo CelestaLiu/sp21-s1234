@@ -134,6 +134,18 @@ public class Repository {
         return Paths.get(fileName).isAbsolute() ? new File(fileName): join(CWD, fileName);
     }
 
+    /** Get head commit of the branch. */
+    private static Commit getBranchHeadCommit(String branchName) {
+        File branchHeadFile = getBranchHeadFile(branchName);
+        return getBranchHeadCommit(branchHeadFile);
+    }
+
+    /** Get branch head ref file in refs/heads folder. */
+    private static File getBranchHeadFile(String branchName) {
+        return join(BRANCH_HEADS_DIR, branchName);
+    }
+
+    /** Get head commit of the branch. */
     private static Commit getBranchHeadCommit(File branchHeadFile) {
         String HEADCommitId = readContentsAsString(branchHeadFile);
         return Commit.fromFile(HEADCommitId);
