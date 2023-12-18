@@ -4,9 +4,11 @@ package gitlet;
 
 import org.w3c.dom.UserDataHandler;
 
+import javax.print.DocFlavor;
 import java.io.File;
 import java.io.Serializable;
 import java.text.DateFormat;
+import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -49,6 +51,15 @@ public class Commit implements Serializable {
         file = getObjectFile(id);
     }
 
+    public Commit(String message, List<String> parents, Map<String, String> tracked) {
+        date = new Date();
+        this.message = message;
+        this.parents = parents;
+        this.tracked = tracked;
+        id = generateId();
+        file = getObjectFile(id);
+    }
+
     private String generateId() {
         return sha1(getTimeStamp(), message, parents.toString(), tracked.toString());
     }
@@ -68,6 +79,29 @@ public class Commit implements Serializable {
 
     public Map<String, String> getTracked() {
         return tracked;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public StringBuilder getLog() {
+        StringBuilder log = new StringBuilder();
+        log.append("===").append("\n");
+        log.append("commit ").append(id).append("\n");
+        if (parents.size() > 1) {
+            log.append("Merge:");
+        }
+        log.append(message).append("\n");
+        return log;
+    }
+
+    public List<String> getParents() {
+        return parents;
+    }
+
+    public Date getDate() {
+        return date;
     }
 
     /* TODO: fill in the rest of this class. */

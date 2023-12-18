@@ -1,7 +1,8 @@
 package gitlet;
 
 import static gitlet.MyUtils.exit;
-import static gitlet.Repository.init;
+import static gitlet.Repository.*;
+
 
 /** Driver class for Gitlet, a subset of the Git version-control system.
  *  @author yaoyao
@@ -24,13 +25,36 @@ public class Main {
                 Repository.init();
                 break;
             case "add":
-                // TODO: handle the `add [filename]` command
                 Repository.checkWorkingDir();
                 checkNumOfArgs(args, 2);
                 String fileName = args[1];
                 new Repository().add(fileName);
                 break;
-            // TODO: FILL THE REST IN
+            case "commit":
+                Repository.checkWorkingDir();
+                checkNumOfArgs(args, 2);
+                String commitMessage = args[1];
+                if (commitMessage.length() == 0) {
+                    exit("Please enter a commit message.");
+                }
+                new Repository().commit(commitMessage);
+                break;
+            case "rm":
+                Repository.checkWorkingDir();
+                checkNumOfArgs(args, 2);
+                String rmMessage = args[1];
+                new Repository().rm(rmMessage);
+                break;
+            case "log":
+                Repository.checkWorkingDir();
+                checkNumOfArgs(args, 1);
+                new Repository().log();
+                break;
+            case "global-log":
+                Repository.checkWorkingDir();
+                checkNumOfArgs(args, 1);
+                Repository.global_log();
+                break;
         }
     }
 

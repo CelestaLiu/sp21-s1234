@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import static gitlet.MyUtils.rm;
 import static gitlet.Utils.readObject;
 import static gitlet.Utils.writeObject;
 
@@ -62,5 +63,51 @@ public class StagingArea implements Serializable {
         }
 
         return true;
+    }
+
+    public boolean isClean() {
+        if (added.isEmpty() && removed.isEmpty()) {
+            return true;
+        }
+        return false;
+    }
+
+    /** Perform a commit. Return tracked files Map after commit. */
+    public Map<String, String> commit() {
+        /* Modify the current tracked files based on the staging area information. */
+        tracked.putAll(added);
+        for (String filePath : removed) {
+            tracked.remove(filePath);
+        }
+
+        clear(); //clear the staging area
+
+        return tracked;
+    }
+
+    /** Clear all the information in the stagingArea. */
+    private void clear() {
+        added.clear();
+        removed.clear();
+    }
+
+    public boolean remove(File file) {
+        String filePath = file.getPath();
+
+        /* Check to see of the file is in the added staging area. */
+        String addedBlobId = added.remove(filePath);
+        if (addedBlobId != null) {
+            return true;
+        }
+
+        /* Check to see if the file is in the current working directory. */
+        if (tracked.get(filePath) != null) { //If the file has the same name.
+            if (file.exists()) { //If the file has the same content.
+                rm(file); //Remove the file from current working directory.
+            }
+            return removed.add(filePath); //Add the file to the removed staging area.
+        }
+
+        return false;
     }
 }

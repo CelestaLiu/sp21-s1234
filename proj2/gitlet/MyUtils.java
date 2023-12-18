@@ -45,4 +45,10 @@ public class MyUtils {
         writeObject(file, obj);
     }
 
+    public static void rm(File file) {
+        if (!(file.delete())) {
+            throw new IllegalArgumentException(String.format("rm: %s: Filed to delete.", file.getPath()));
+        }
+    }
+
 }
